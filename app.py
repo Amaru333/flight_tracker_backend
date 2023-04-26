@@ -133,7 +133,7 @@ def flight_price_subscribe():
     destination = request.args.get('destination')
     date = request.args.get('date')
     price_data = collection.find_one({'origin': origin, 'destination': destination, 'date': date})
-    if not any(d['phone_number'] == phone_number or d['email'] == email for d in price_data['subscribed_users']):
+    if price_data['subscribed_users'] and not any(d['phone_number'] == phone_number or d['email'] == email for d in price_data['subscribed_users']):
         print(price_data["_id"])
         collection.update_one({ '_id': ObjectId(price_data["_id"])}, {'$push' : {'subscribed_users': {
             'phone_number': phone_number,
