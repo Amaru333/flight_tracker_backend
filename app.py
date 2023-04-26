@@ -7,6 +7,7 @@ from flask_apscheduler import APScheduler
 from bson import ObjectId
 from bson.timestamp import Timestamp
 from flask_cors import CORS
+import os
 
 from datetime import datetime
 
@@ -15,7 +16,7 @@ CORS(app, resources={r"/*": {"origins": ["http://localhost:3000", "https://fligh
 
 sched = APScheduler()
 
-client = MongoClient('mongodb+srv://Amaru333:amaru333@cluster0.fozlt.mongodb.net/')
+client = MongoClient(os.getenv('MONGODB'))
 db = client['flights']
 collection = db['itinerary']
 current_date = datetime.now()
@@ -47,7 +48,7 @@ def get_cheapest_price(origin, destination, date):
         }
     }
     headers = {
-        'X-RapidAPI-Key': 'eeabd0a888mshf812e980c8669bep18391ejsn0450e3b2af39',
+        'X-RapidAPI-Key': os.getenv('RAPID_API'),
         'X-RapidAPI-Host': 'skyscanner-api.p.rapidapi.com'
     }
     response = requests.post(url, json=payload, headers=headers)
