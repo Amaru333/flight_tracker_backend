@@ -75,6 +75,7 @@ def get_cheapest_price(origin, destination, date):
 
 @app.route('/flight-price')
 def flight_price():
+    print(current_date)
     origin = request.args.get('origin')
     destination = request.args.get('destination')
     date = request.args.get('date')
@@ -187,6 +188,6 @@ def check_flight_price():
                     notify_users(document['subscribed_users'], document['currency'], document['tracked_min_price'], new_data['current_cheapest_price'], new_data['link'], document['origin'], document['destination'], document['date'])
 
 if __name__ == '__main__':
-    sched.add_job(id="GetPrices", func=check_flight_price, trigger="cron", day_of_week="mon-sun", hour=12, minute=40)
+    sched.add_job(id="GetPrices", func=check_flight_price, trigger="cron", day_of_week="mon-sun", hour=14, minute=50)
     sched.start()
     app.run(debug=True, use_reloader = False)
