@@ -149,7 +149,7 @@ def notify_users(users, currency, old_price, new_price, new_link, origin, destin
     "message": {
         "content": {
         "title": "Price drop on flight " + origin + "-" + destination,
-        "body": "The flight from " + origin + " to " + destination + " on " + str(date[0:4]) + "/" + str(date[4:6]) + "/" + str(date[6:8]) + " has dropped from " + currency + " " + str(old_price) + " to " + currency + " " + str(new_price) + ". Click on the <b>following link</b> to book the flight: " + new_link
+        "body": "The flight from " + origin + " to " + destination + " on " + str(date[0:4]) + "/" + str(date[4:6]) + "/" + str(date[6:8]) + " has dropped from " + currency + " " + str(old_price) + " to " + currency + " " + str(new_price) + ". Click on the following link to book the flight: " + new_link
         },
         "routing": {
         "method": "all",
@@ -187,6 +187,6 @@ def check_flight_price():
                     notify_users(document['subscribed_users'], document['currency'], document['tracked_min_price'], new_data['current_cheapest_price'], new_data['link'], document['origin'], document['destination'], document['date'])
 
 if __name__ == '__main__':
-    sched.add_job(id="GetPrices", func=check_flight_price, trigger="cron", day_of_week="mon-sun", hour=18, minute=59)
+    sched.add_job(id="GetPrices", func=check_flight_price, trigger="cron", day_of_week="mon-sun", hour=12, minute=40)
     sched.start()
     app.run(debug=True, use_reloader = False)
